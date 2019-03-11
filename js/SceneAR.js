@@ -121,9 +121,10 @@ export default class SceneAR extends Component {
 }
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
-    fontFamily: 'Arial',
+    fontFamily: 'Source Sans Pro',
     fontSize: 150,
-    color: '#d30606',
+    color: '#2c3e50',
+    fontWeight: 'bold',
     textAlignVertical: 'center',
     textAlign: 'center',
   },

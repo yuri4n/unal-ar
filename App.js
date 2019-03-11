@@ -65,15 +65,18 @@ export default class ViroSample extends Component {
       <View style={localStyles.outer} >
         <View style={localStyles.inner} >
 
+          <Text style={localStyles.muteText}>
+            Made by Julian Garzon for UN
+          </Text>
           <Text style={localStyles.titleText}>
-            Inicia la experiencia
+            Inicia la experiencia UnalAR
           </Text>
 
           <TouchableHighlight style={localStyles.buttons}
             onPress={this._getExperienceButtonOnPress(AR_NAVIGATOR_TYPE)}
             underlayColor={'#68a0ff'} >
 
-            <Text style={localStyles.buttonText}>INICIAR</Text>
+            <Text style={localStyles.buttonText}>Iniciar</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -124,13 +127,24 @@ var localStyles = StyleSheet.create({
     backgroundColor: "#707070",
   },
   titleText: {
+    fontFamily: 'Source Sans Pro',
     paddingTop: 30,
     paddingBottom: 20,
     color: '#fff',
     textAlign: 'center',
     fontSize: 25
   },
+  muteText: {
+    fontFamily: 'Source Sans Pro',
+    paddingTop: 30,
+    paddingBottom: 20,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '300',
+    fontSize: 12
+  },
   buttonText: {
+    fontFamily: 'Source Sans Pro',
     color: '#fff',
     textAlign: 'center',
     fontSize: 20
