@@ -155,7 +155,6 @@ android {
 
 dependencies {
     compile project(':react-native-simple-compass')
-    compile project(':react-native-heading')
     compile project(':react-native-geolocation-service')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'

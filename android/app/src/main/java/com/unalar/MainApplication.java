@@ -7,7 +7,6 @@ import com.reactlibrary.RNSimpleCompassPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
 import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 
 import com.viromedia.bridge.ReactViroPackage;
@@ -29,7 +28,6 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
                 new RNSimpleCompassPackage(),
-                new ReactNativeHeadingPackage(),
                 new RNFusedLocationPackage(),
                 new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM))
             );

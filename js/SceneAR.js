@@ -1,7 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
 import { StyleSheet, NativeEventEmitter, DeviceEventEmitter, AsyncStorage, PermissionsAndroid } from 'react-native';
-import ReactNativeHeading from '@zsajjad/react-native-heading';
 import Geolocation from 'react-native-geolocation-service'
 import {
   ViroARScene,
@@ -44,6 +43,7 @@ export default class SceneAR extends Component {
       console.warn(err)
     }
   }
+
   constructor() {
     super();
     this.requestLocationPermission = this.requestLocationPermission.bind(this);
@@ -58,43 +58,24 @@ export default class SceneAR extends Component {
       quimicaZ: 0,
       aulasX: 0,
       aulasZ: 0,
-      headingAngle: 0,
-      headAngle: 0
+      Heading: 0,
     };
-    RNSimpleCompass.start(degree_update_rate, (degree) => {
-      this.setState({ Degree: degree });
-      RNSimpleCompass.stop();
-    });
+
     // bind 'this' to functions   
     this._onInitialized = this._onInitialized.bind(this);
     this._latLongToMerc = this._latLongToMerc.bind(this);
     this._transformPointToAR = this._transformPointToAR.bind(this);
-  }
-  updateHead() {
-    AsyncStorage.setItem('headstart', JSON.stringify(this.state.headingAngle))
+
+    RNSimpleCompass.start(degree_update_rate, (degree) => {
+      var grados = degree;
+      this.setState({ Heading: grados });
+      RNSimpleCompass.stop();
+    });
   }
   componentDidMount() {
     this.requestLocationPermission();
-    ReactNativeHeading.start(1)
-      .then(didStart => {
-        this.setState({
-          headingIsSupported: didStart,
-        })
-      })
-    var flag = 0
-    DeviceEventEmitter.addListener('headingUpdated', heading => {
-      this.setState({ headingAngle: heading })
-      //console.log('heading State',heading)
-      if (flag == 0) {
-        this.updateHead()
-      }
-      flag = 1
-    });
-    this.updateHead()
   }
   componentWillUnmount() {
-    ReactNativeHeading.stop();
-    DeviceEventEmitter.removeAllListeners('headingUpdated');
   }
   render() {
     return (<ViroARScene onTrackingUpdated={this._onInitialized}>
@@ -126,10 +107,12 @@ export default class SceneAR extends Component {
     return ({ x: xmeters, y: ymeters });
   }
   _transformPointToAR(lat, long) {
-    AsyncStorage.getItem('headstart')
-      .then(res => { console.log('HeadAngle', res), this.setState({ headAngle: res }) })
     var objPoint = this._latLongToMerc(lat, long);
     var devicePoint = this._latLongToMerc(this.state.latitude, this.state.longitude);
+
+    var objPointX = objPoint.x * Math.cos(this.state.Heading) + objPoint.y * Math.sin(this.state.Heading);
+    var objPointY = objPoint.y * Math.cos(this.state.Heading) - objPoint.x * Math.sin(this.state.Heading);
+
     var objFinalPosZ = (objPoint.y - devicePoint.y);
     var objFinalPosX = (objPoint.x - devicePoint.x);
 
@@ -139,7 +122,7 @@ export default class SceneAR extends Component {
 var styles = StyleSheet.create({
   helloWorldTextStyle: {
     fontFamily: 'Arial',
-    fontSize: 30,
+    fontSize: 150,
     color: '#d30606',
     textAlignVertical: 'center',
     textAlign: 'center',
