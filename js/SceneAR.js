@@ -4,21 +4,23 @@ import { StyleSheet, NativeEventEmitter, DeviceEventEmitter, AsyncStorage, Permi
 import ReactNativeHeading from '@zsajjad/react-native-heading';
 import Geolocation from 'react-native-geolocation-service'
 import {
-  ViroARSceneNavigator,
   ViroARScene,
   ViroText,
   ViroConstants,
-  ViroImage,
-  ViroARPlane,
-  ViroBox,
 } from 'react-viro';
 import RNSimpleCompass from 'react-native-simple-compass';
+
 const degree_update_rate = 3; // Number of degrees changed before the callback is triggered
+
 export default class SceneAR extends Component {
   async requestLocationPermission() {
     try {
       const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'UnalAR',
+          'message': 'UnalAR requiere tu localización'
+        }
       )
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
         //console.log("You can use the location")
@@ -35,7 +37,7 @@ export default class SceneAR extends Component {
         )
       } else {
         //console.log("location permission denied")
-        alert("Location permission denied");
+        alert("No se puede usar la localización");
       }
       return granted;
     } catch (err) {
@@ -47,7 +49,7 @@ export default class SceneAR extends Component {
     this.requestLocationPermission = this.requestLocationPermission.bind(this);
     // Set initial state here
     this.state = {
-      text: "Inicializando AR...",
+      text: "Inicializando...",
       latitude: 0,
       longitude: 0,
       cytX: 0,
